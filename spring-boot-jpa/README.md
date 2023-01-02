@@ -53,4 +53,38 @@
     - Optional을 통해 처리하자
 
 - 단건 조회요청, 여러건 조회
+
   - Exception 발생
+
+- Spring Data jpa가 제공하는 Paging
+
+  - 리턴타입이 `Page<>` 인경우
+    - 추가적으로 Count 쿼리 발생
+  - 리턴타입이 'Slice<>` 인경우
+
+    - 추가쿼리 없음 (핸드폰에서 '더보기' 구현시 사용)
+
+  - `Page<Member> findByAge(int age, Pageable pageable);`
+  - ```java
+    PageRequest pageRequest = PageRequest.of(0,3, Sort.by(Sort.Direction.DESC,"username"));
+    Page<Member> page = memberRepository.findByAge(10,pageRequest);
+    ```
+
+- Page 사용시 주의사항
+
+  - Page는 추가적으로 count query가 발생
+  - 이는 원래 데이터를 가져오는 query에 의존하므로 원래 query가 join을 사용하면 count query도 join 사용
+
+    - _원래쿼리_
+      ![image](https://user-images.githubusercontent.com/67682840/210199846-a039ec33-e41f-4fdd-a291-328ee05c329e.png)
+    - _카운트쿼리_
+      ![image](https://user-images.githubusercontent.com/67682840/210199879-f4a259d0-15fc-420f-a00a-993a9df84048.png)
+
+  - count query가 join 사용 시 성능 저하 발생, 이를 최적화하기 위해 countQuery를 분리하는 기능을 제공한다.
+
+    - ```java
+      @Query(value="select m from Member m left join m.team t",countQuery="select count(m) from Member m")
+      Page<Member> findByAge(int age, Pageable pageable);
+      ```
+
+  - Entity 대신 Dto를 노출, Page.map 권장

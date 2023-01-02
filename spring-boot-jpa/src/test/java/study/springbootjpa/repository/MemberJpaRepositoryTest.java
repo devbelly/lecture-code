@@ -54,6 +54,7 @@ class MemberJpaRepositoryTest {
 
         List<Member> result = memberJpaRepository.findByUsername("AAA");
         assertThat(result.get(0).getUsername()).isEqualTo("AAA");
-
     }
+
+
 }
