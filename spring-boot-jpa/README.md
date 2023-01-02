@@ -32,3 +32,10 @@
 
   - 실무에서는 잘 사용하지 않는다
   - 애플리케이션 로딩시점에 문법적인 오류를 잡는 장점이 있다
+
+- Member 대신 MemberDto 조회하기
+
+```java
+  @Query("select new study.springbootjpa.dto.MemberDto(m.id,m.username, t.name) from Member m join m.team t")
+  List<MemberDto> findMemberDto();
+```
