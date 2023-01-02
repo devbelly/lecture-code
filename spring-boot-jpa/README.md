@@ -23,3 +23,7 @@
   - https://catsbi.oopy.io/ed9236a0-6521-471d-8a0d-b852147b5980
 
 - 모든 연관관계는 지연로딩으로 설정해야 최적화가 쉽다.
+
+#### 2023-01-02
+
+- `getOne(Id)`: 엔티티를 프록시로 조회한다. 내부에서 `EntityManager.getReference()` 호출
