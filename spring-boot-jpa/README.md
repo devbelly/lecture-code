@@ -39,3 +39,18 @@
   @Query("select new study.springbootjpa.dto.MemberDto(m.id,m.username, t.name) from Member m join m.team t")
   List<MemberDto> findMemberDto();
 ```
+
+- 다양한 리턴타입 지원
+
+  - `List<Member>`에 반환되는 객체가 없다면
+    null이 아닌 empty collection이 리턴된다.
+
+    - 실무에서 `!= null` 와 같은 코드는 지양
+
+  - 단건조회의 경우 반환되는객체가 없다면 null이 리턴
+
+    - JPA는 noResultException, Data Jpa는 이 에러를 캐치해서 null 리턴
+    - Optional을 통해 처리하자
+
+- 단건 조회요청, 여러건 조회
+  - Exception 발생

@@ -98,9 +98,18 @@ class MemberRepositoryTest {
         for (MemberDto memberDto : usernameList) {
             System.out.println("dto = " + memberDto);
         }
-
-
-
-
     }
+
+    @Test
+    public void returnType(){
+        Member m1 = new Member("AAA",10);
+        Member m2 = new Member("BBB",20);
+
+        memberRepository.save(m1);
+        memberRepository.save(m2);
+
+        List<Member> aaa = memberRepository.findByUsername("no exist");
+        System.out.println("aaa = " + aaa);
+    }
+
 }

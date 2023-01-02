@@ -7,6 +7,7 @@ import study.springbootjpa.dto.MemberDto;
 import study.springbootjpa.entity.Member;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member,Long> {
     List<Member> findByUsernameAndAgeGreaterThan(String username, int age);
@@ -22,4 +23,8 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
 
     @Query("select new study.springbootjpa.dto.MemberDto(m.id,m.username, t.name) from Member m join m.team t")
     List<MemberDto> findMemberDto();
+
+    List<Member> findListByUsername(String username);
+    Member findOneByUsername(String username);
+    Optional<Member> findOptionalByUsername(String username);
 }
