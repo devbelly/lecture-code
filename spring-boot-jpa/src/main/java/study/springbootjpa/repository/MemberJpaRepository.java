@@ -54,4 +54,5 @@ public class MemberJpaRepository {
                 .setParameter("username",username)
                 .getResultList();
     }
+
 }

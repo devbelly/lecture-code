@@ -1,6 +1,6 @@
 ## spring-data-jpa
 
-#### 2023-01-01
+---
 
 - Entity는 `public`, `protected`를 접근제어자로 하는 기본생성자 필요
 
@@ -24,7 +24,11 @@
 
 - 모든 연관관계는 지연로딩으로 설정해야 최적화가 쉽다.
 
-#### 2023-01-02
+<br>
+
+---
+
+<br>
 
 - `getOne(Id)`: 엔티티를 프록시로 조회한다. 내부에서 `EntityManager.getReference()` 호출
 
@@ -76,8 +80,11 @@
   - 이는 원래 데이터를 가져오는 query에 의존하므로 원래 query가 join을 사용하면 count query도 join 사용
 
     - _원래쿼리_
+
       ![image](https://user-images.githubusercontent.com/67682840/210199846-a039ec33-e41f-4fdd-a291-328ee05c329e.png)
+
     - _카운트쿼리_
+
       ![image](https://user-images.githubusercontent.com/67682840/210199879-f4a259d0-15fc-420f-a00a-993a9df84048.png)
 
   - count query가 join 사용 시 성능 저하 발생, 이를 최적화하기 위해 countQuery를 분리하는 기능을 제공한다.
@@ -88,3 +95,24 @@
       ```
 
   - Entity 대신 Dto를 노출, Page.map 권장
+
+<br>
+
+---
+
+<br>
+
+- 벌크성 수정쿼리는 데이터를 읽어와서 업데이트 하는 대신 직접 데이터베이스에 SQL를 날리는 것이 좋다
+- Update 작성시 `@Modifying` 필요
+
+  - :warning:주의
+
+    벌크성 수정쿼리는 직접 SQL에 변경을 주는 것이므로 1차캐시에 저장된 내용과는 다르다
+    :arrow_right: `flush`, `clear`을 통해 1차캐시를 완전히 없앤 후 조회
+
+  - Spring Data Jpa에서는...
+
+    - JPQL은 flush 이후에 실행되므로 굳이 `em.flush` :x:
+    - `@Modifying` 을 통해 `em.clear` 제공
+
+      - `@Modifying(clearAutomatically = true)`
