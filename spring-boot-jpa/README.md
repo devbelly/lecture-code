@@ -135,3 +135,15 @@
       - fetch Join 사용 시 Proxy가 아닌 실제 객체를 가져온다
 
 - JPQL을 작성하는 대신 `@EntityGraph`을 통해 fetch join을 제공한다.
+
+<br>
+
+---
+
+<br>
+
+- JpaRepository에서 여러가지 이유로 메서드를 직접 작성해서 사용하고 싶다면 Custom Repository를 제공할 수 있다.
+
+  1. 인터페이스 생성(ex. MemberCustomRepository)
+  2. 클래스 생성, 단 suffix는 Impl로 끝나야 한다. (ex. MemberCustomRepositoryImpl)
+  3. 원래 인터페이스에 `extends MemberCustomRepository `추가

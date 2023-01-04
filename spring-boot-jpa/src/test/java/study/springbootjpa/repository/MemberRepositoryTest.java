@@ -189,5 +189,13 @@ class MemberRepositoryTest {
         }
     }
 
+    @Test
+    public void testCustomRepo(){
+        memberRepository.save(new Member("member1"));
+        em.flush();
+        em.clear();
+
+        memberRepository.findCustomByUsername("member1");
+    }
 
 }
