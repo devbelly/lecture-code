@@ -155,3 +155,7 @@
   - `@EntityListeners(AuditingEntityListener.class)` 추가
 
   - `AuditorAware<String> auditorProvider()` 추가
+
+- URL 파라미터로 size, page, sort 등 을 제공하면 컨트롤러에서 `PageRequest` 객체를 생성해준다 (Spring Data Jpa 기능)
+
+  기본 값을 설정하고 싶다면 `@PageableDefault` 를 통해 변경 가능
