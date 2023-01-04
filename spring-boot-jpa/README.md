@@ -103,6 +103,7 @@
 <br>
 
 - 벌크성 수정쿼리는 데이터를 읽어와서 업데이트 하는 대신 직접 데이터베이스에 SQL를 날리는 것이 좋다
+
 - Update 작성시 `@Modifying` 필요
 
   - :warning:주의
@@ -116,3 +117,21 @@
     - `@Modifying` 을 통해 `em.clear` 제공
 
       - `@Modifying(clearAutomatically = true)`
+
+<br>
+
+---
+
+<br>
+
+- 실무에서는 fetchType을 LAZY로 설정해야함
+
+  - 연관된 객체를 Proxy로 가져온다
+
+    - 실제 객체를 사용할 때 추가쿼리발생(N+1)
+
+    - fetch Join을 통해 해결가능
+
+      - fetch Join 사용 시 Proxy가 아닌 실제 객체를 가져온다
+
+- JPQL을 작성하는 대신 `@EntityGraph`을 통해 fetch join을 제공한다.

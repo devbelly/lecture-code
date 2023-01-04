@@ -164,8 +164,29 @@ class MemberRepositoryTest {
 
 
         assertThat(member5.getAge()).isEqualTo(51);
+    }
 
+    @Test
+    public void fetchJoinLazy(){
+        Team teamA = new Team("teamA");
+        Team teamB = new Team("teamB");
 
+        teamRepository.save(teamA);
+        teamRepository.save(teamB);
+
+        memberRepository.save(new Member("member1",10,teamA));
+        memberRepository.save(new Member("member1",10,teamB));
+
+        em.flush();
+        em.clear();
+
+        List<Member> list = memberRepository.findEntityGraphByUsername("member1");
+
+        for (Member member : list) {
+            System.out.println("member = " + member);
+            System.out.println("member.teamClass = " + member.getTeam().getClass());
+            System.out.println("member.Team = " + member.getTeam().getName());
+        }
     }
 
 
