@@ -195,7 +195,14 @@ class MemberRepositoryTest {
         em.flush();
         em.clear();
 
-        memberRepository.findCustomByUsername("member1");
+        List<Member> result = memberRepository.findCustomByUsername("member1");
+        Member member = result.get(0);
+        System.out.println("--------------");
+        System.out.println(member.getCreatedBy());
+        System.out.println(member.getLastModifiedBy());
+        System.out.println(member.getCreatedDate());
+        System.out.println(member.getUpdatedDate());
+        System.out.println("--------------");
     }
 
 }

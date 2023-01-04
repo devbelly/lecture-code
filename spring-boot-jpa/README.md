@@ -147,3 +147,11 @@
   1. 인터페이스 생성(ex. MemberCustomRepository)
   2. 클래스 생성, 단 suffix는 Impl로 끝나야 한다. (ex. MemberCustomRepositoryImpl)
   3. 원래 인터페이스에 `extends MemberCustomRepository `추가
+
+- Jpa Auditing
+
+  - `@EnableJpaAuditing` 추가
+
+  - `@EntityListeners(AuditingEntityListener.class)` 추가
+
+  - `AuditorAware<String> auditorProvider()` 추가
