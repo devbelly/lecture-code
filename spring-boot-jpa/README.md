@@ -1,7 +1,5 @@
 ## spring-data-jpa
 
----
-
 - Entity는 `public`, `protected`를 접근제어자로 하는 기본생성자 필요
 
   - JPA에서 객체에 값 매핑 시 기본 생성자로 객체를 생성 후 Reflection을 사용
