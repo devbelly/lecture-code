@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import study.springbootjpa.dto.MemberDto;
+import study.springbootjpa.dto.UsernameOnlyDto;
 import study.springbootjpa.entity.Member;
 
 import java.util.List;
@@ -45,4 +46,5 @@ public interface MemberRepository extends JpaRepository<Member,Long>, MemberRepo
     @EntityGraph(attributePaths = {"team"})
     List<Member> findEntityGraphByUsername(String username);
 
+    List<UsernameOnlyDto> findProjectionByUsername(String username);
 }

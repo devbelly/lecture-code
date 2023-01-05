@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import study.springbootjpa.dto.MemberDto;
+import study.springbootjpa.dto.UsernameOnlyDto;
 import study.springbootjpa.entity.Member;
 import study.springbootjpa.entity.Team;
 
@@ -203,6 +204,20 @@ class MemberRepositoryTest {
         System.out.println(member.getCreatedDate());
         System.out.println(member.getUpdatedDate());
         System.out.println("--------------");
+    }
+
+    @Test
+    public void Test(){
+        memberRepository.save(new Member("m1"));
+
+        em.flush();
+        em.clear();
+
+        List<UsernameOnlyDto> result = memberRepository.findProjectionByUsername("m1");
+        System.out.println(result.get(0).getClass().getName());
+        for (UsernameOnlyDto usernameOnly : result) {
+            System.out.println("result = " + usernameOnly.getUsername());
+        }
     }
 
 }

@@ -159,3 +159,66 @@
 - URL 파라미터로 size, page, sort 등 을 제공하면 컨트롤러에서 `PageRequest` 객체를 생성해준다 (Spring Data Jpa 기능)
 
   기본 값을 설정하고 싶다면 `@PageableDefault` 를 통해 변경 가능
+
+- JPA의 엔티티 변경은 트랜잭션 안에서 일어나야함
+
+- spring data jpa는 기본적으로 트랜잭션 내에서 작동하도록 설계됨
+
+- merge는 데이터베이스에 쿼리를 한번 날린 후 1차 캐시로 가져온 값을 파라미터로 대체하는 형식으로 작동
+
+<br>
+
+---
+
+<br>
+
+#### Projections
+
+전체 엔티티 대신 DTO를 편리하게 조회하고 싶을 때 사용가능
+
+<br>
+
+**인터페이스 기반**
+
+조회할 엔티티의 필드를 getter 형식으로 지정하면 해당 필드만 조회
+
+```java
+public interface UsernameOnly {
+    String getUsername();
+}
+```
+
+_레포지토리에 해당 인터페이스 타입 리턴_
+
+```java
+List<UsernameOnly> findProjectionByUsername(String usermae);
+```
+
+- Proxy로 구현 객체를 제공한다
+
+<br>
+
+**클래스 기반**
+
+- 레포지토리에 해당 클래스 타입 리턴 :arrow_right: `UsernameOnly`
+- :warning: 생성자의 파라미터명을 기반으로 매핑한다
+
+```java
+public class UsernameOnlyDto {
+    private String username;
+
+    public UsernameOnlyDto(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+}
+```
+
+```java
+List<UsernameOnlyDto> findProjectionByUsername(String username);
+```
+
+- 클래스에 대한 정보를 넘겨줌으로써 동적 프로젝션 구현도 가능
