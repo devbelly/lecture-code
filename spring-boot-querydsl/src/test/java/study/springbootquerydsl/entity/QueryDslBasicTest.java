@@ -1,5 +1,6 @@
 package study.springbootquerydsl.entity;
 
+import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.*;
 import static study.springbootquerydsl.entity.QMember.member;
 
 @SpringBootTest
@@ -51,7 +55,7 @@ public class QueryDslBasicTest {
                 .where(member.username.eq("member1"))
                 .fetchOne();
 
-        Assertions.assertThat(findMember.getUsername()).isEqualTo("member1");
+        assertThat(findMember.getUsername()).isEqualTo("member1");
     }
 
     @Test
@@ -65,6 +69,34 @@ public class QueryDslBasicTest {
                 )
                 .fetchOne();
 
-        Assertions.assertThat(findMember.getUsername()).isEqualTo("member1");
+        assertThat(findMember.getUsername()).isEqualTo("member1");
+    }
+
+    @Test
+    public void result(){
+
+        QueryResults<Member> results = queryFactory
+                .selectFrom(member)
+                .fetchResults();
+
+        results.getTotal();
+        results.getResults();
+    }
+
+    @Test
+    public void sort(){
+
+        em.persist(new Member("member5",100));
+        em.persist(new Member("member6",100));
+        em.persist(new Member(null,100));
+
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .orderBy(member.age.desc(), member.username.asc().nullsLast())
+                .fetch();
+
+        assertThat(result.get(0).getUsername()).isEqualTo("member5");
+        assertThat(result.get(1).getUsername()).isEqualTo("member6");
+        assertThat(result.get(2).getUsername()).isNull();
     }
 }
