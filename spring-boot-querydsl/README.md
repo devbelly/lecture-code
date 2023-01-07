@@ -60,3 +60,31 @@ List<Tuple> result = queryFactory
 - `.leftJoin(team).on()` 처럼 작성하면 on을 기준으로 on절이 작성됨
 
   ![image](https://user-images.githubusercontent.com/67682840/210945523-ee2d9c31-52d0-420e-9f58-d3c98493c0b4.png)
+
+ <br>
+
+**Projection시 Dto를 활용하는 방법**
+
+- `package com.querydsl.core.types;` 에서 제공하는 `Projections` 활용하자
+
+  - .bean()을 활용한 세터방식
+  - .fields()를 활용한 필드방식
+  - .constructor()을 활용한 생성자방식
+
+- `Dto`의 필드명과 `select`의 이름이 다르다면 어떻게 해야할까? (UserDto은 username이 아니라 name 필드를 사용하는 상황)
+
+  - `.as()`를 활용한 별칭
+  - 서브쿼리 시, `ExpressionUtils.as()`, `JPAExpression()` 사용
+
+  - ```java
+    List<UserDto> result = queryFactory
+    	.select(Projections.constructor(UserDto.class,
+    			member.username.as("name"),
+
+    			ExpressionUtils.as(JPAExpressions
+    					.select(memberSub.age.max())
+    					.from(memberSub), "age"))
+    	)
+    	.from(member)
+    	.fetch();
+    ```

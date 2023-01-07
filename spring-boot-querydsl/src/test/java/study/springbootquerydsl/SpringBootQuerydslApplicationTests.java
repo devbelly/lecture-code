@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
+import study.springbootquerydsl.dto.MemberDto;
 import study.springbootquerydsl.entity.Hello;
 import study.springbootquerydsl.entity.QHello;
 
 import javax.persistence.EntityManager;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -35,6 +38,7 @@ class SpringBootQuerydslApplicationTests {
 
 		assertThat(result).isEqualTo(hello);
 	}
+
 
 
 }
