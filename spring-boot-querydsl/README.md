@@ -88,3 +88,32 @@ List<Tuple> result = queryFactory
     	.from(member)
     	.fetch();
     ```
+
+<br>
+
+**동적쿼리**
+
+- 방법1) `BooleanBuilder` 사용
+- 방법2) `where` 다중 파라미터 사용
+
+  - composition 방법을 활용해 조건 재사용성이 증가
+  - 가독성이 증가
+
+  ```java
+      private List<Member> search2(String usernameParam, Integer ageParam) {
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .where(usernameEq(usernameParam), ageEq(ageParam))
+                .fetch();
+
+        return result;
+    }
+
+    private BooleanExpression ageEq(Integer ageParam) {
+        return ageParam!=null ? member.age.eq(ageParam):null;
+    }
+
+    private BooleanExpression usernameEq(String usernameParam) {
+        return usernameParam!=null?member.username.eq(usernameParam):null;
+    }
+  ```
