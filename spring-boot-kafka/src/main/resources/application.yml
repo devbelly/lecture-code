@@ -1,0 +1,27 @@
+eventbus:
+  thread:
+    thread-name-prefix: eventBus-thread-
+    core-pool-size: 2  # 동시에 실행시킬 쓰레드의 갯수
+    max-pool-size: 10   # 쓰레드 풀의 최대 사이즈
+    queue-capacity: 20 # 쓰레드 풀 큐의 사이즈.
+
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:9095
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/kafka
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+
+logging.level:
+  org.hibernate.SQL: debug
+

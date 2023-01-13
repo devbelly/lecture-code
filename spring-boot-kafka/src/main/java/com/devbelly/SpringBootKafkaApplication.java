@@ -16,10 +16,10 @@ public class SpringBootKafkaApplication {
 	/**
 	 * kafkaTemplate를 인자로 받아 Topic을 전송한다
 	 */
-	@Bean
-	CommandLineRunner commandLineRunner(KafkaTemplate<String,String> kafkaTemplate){
-		return args ->{
-			kafkaTemplate.send("amigoscode","hello kafka");
-		};
-	}
+//	@Bean
+//	CommandLineRunner commandLineRunner(KafkaTemplate<String,String> kafkaTemplate){
+//		return args ->{
+//			kafkaTemplate.send("amigoscode","hello kafka");
+//		};
+//	}
 }
