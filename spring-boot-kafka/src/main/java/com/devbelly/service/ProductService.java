@@ -17,11 +17,13 @@ public class ProductService {
     private final EventBus eventBus;
 
     public void update(Long id){
+
+
         Product product = productRepository.findById(id).get();
         Long currentPrice = product.getPrice();
         product.setPrice(currentPrice-10);
         productRepository.save(product);
-
+//
         PriceDownEvent event = new PriceDownEvent();
         event.setId(product.getId());
         event.setTitie(product.getTitle());

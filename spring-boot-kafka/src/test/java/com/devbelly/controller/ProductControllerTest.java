@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
+@Commit
 class ProductControllerTest {
 
     @Autowired
@@ -30,6 +32,9 @@ class ProductControllerTest {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    EntityManager em;
+
     @Test
     void hi() {
         Product product = Product.of("맥북", 1000L);
@@ -39,6 +44,9 @@ class ProductControllerTest {
         assertThat(findProduct).isEqualTo(product);
 
         productService.update(product.getId());
+
+        em.flush();
+        em.clear();
 
         List<Notification> findNotiList = notificationRepository.findAll();
         assertThat(findNotiList.size()).isEqualTo(1);

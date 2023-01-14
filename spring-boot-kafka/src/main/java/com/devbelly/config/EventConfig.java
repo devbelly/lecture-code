@@ -5,6 +5,7 @@ import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,7 +48,7 @@ public class EventConfig {
     }
 
     @Bean(destroyMethod = "close")
-    public PriceDownEventListener priceDownEventListener(EventBus eventBus, KafkaTemplate kafkaTemplate){
+    public PriceDownEventListener priceDownEventListener(EventBus eventBus, @Qualifier("kafkaPriceDownTemplate") KafkaTemplate kafkaTemplate){
         return new PriceDownEventListener(eventBus,kafkaTemplate);
     }
 }

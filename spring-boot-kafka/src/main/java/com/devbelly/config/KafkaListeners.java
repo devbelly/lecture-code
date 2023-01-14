@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class KafkaListeners {
@@ -16,9 +18,11 @@ public class KafkaListeners {
 
     @KafkaListener(
             topics="price-down",
+            containerFactory = "kafkaListenerContainerPriceDownFactory",
             groupId = "groupId"
     )
-    void listener(PriceDownEvent event){
+    void listener(PriceDownEvent events){
+        System.out.println("okoko");
         notificationRepository.save(new Notification());
     }
 }

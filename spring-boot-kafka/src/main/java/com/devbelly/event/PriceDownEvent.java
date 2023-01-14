@@ -8,9 +8,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class PriceDownEvent {
 
-    public static final String MESSAGE = "price-down";
 
     private Long id;
     private String titie;
