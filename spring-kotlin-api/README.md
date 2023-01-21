@@ -21,7 +21,7 @@ plugins {
 - `@Configuration`, `@Controller`, `@RestController`, `@Service`, `@Repository`, `@Component` 
 
 ```
-@Transactional
+@Transactioal
 class Foo{
     fun test(){}
 }
