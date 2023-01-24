@@ -18,7 +18,7 @@ plugins {
 - `@Transactional`
 - `@Cacheable`
 - `@SpringbootTest`
-- `@Configuration`, `@Controller`, `@RestController`, `@Service`, `@Repository`, `@Component` 
+- `@Configuration`, `@Controller`, `@RestController`, `@Service`, `@Repository`, `@Component`
 
 ```kotlin
 @Transactional
@@ -45,6 +45,7 @@ allOpen {
 `gradle` 설정으로 특정 어노테이션에 대해서 `allOpen`을 동작시킬 수 있습니다.
 
 #### all-open이 왜 필요할까?
+
 spring boot 2.x 버전부터는 CGLIB Proxy 방식으로 Bean을 관리한다. CGLIB은 Target Class를 상속받아 생성하므로 `open`으로 상속 가능한 상태여야합니다.
 
 ```gradle
@@ -54,6 +55,7 @@ allOpen {
     annotation("javax.persistence.Embeddable")
 }
 ```
+
 만약 `open`이 아니라면 Jpa 사용시 프록시 객체를 생성할 수 없어 지연로딩이 정상적으로 작동하지 않는 것을 알 수 있습니다. `@Entity`는 `plugin.spring`이 지원하지 않으므로 `allOpen`으로 수동 추가합니다.
 
 #### no-args
@@ -62,8 +64,8 @@ allOpen {
 
 - `@Entity`
 - `@Embeddable`
-- `@MappedSuperclass`   
-  
+- `@MappedSuperclass`
+
 # Kotlin + Spring data jpa
 
 ### Repository 01
@@ -162,18 +164,45 @@ class Person(
 
 # Test
 
+#### Mock
+
+- 테스트를 위해 만든 모형
+- 실제 객체와 비슷한 모형을 만드는 것을 Mocking이라고 한다
+- 모킹한 객체를 메모리에서 얻어내는 것을 Mock up이라고 한다.
+
 #### `@ExtendWith`
 
 - JUnit 4의 `@RunWith`가 JUnit 5에서는 `@ExtendWith`로 변경
 - `@SpringBootTest`에 포함되어 있음
 
+#### `@SpringBootTest`
+
+- 전체 빈 중 특정 빈을 선택하여 생성가능
+- 특정 빈을 Mock으로 대체가능
+- 테스트에 사용할 ApplicationContext를 쉽게 생성하고 조작할 수 있다.
+  - MOCK
+    `WebApplicationContext`를 로드하며 내장된 서블릿 컨테이너가 아닌 Mock 서블릿을 제공합니다. `@AutoConfigureMockMvc` 어노테이션과 함께 사용하면 별다른 설정없이 `MockMvc`를 사용해 테스트 가능
+  - RANDOM_PORT
+    `EmbeddedWebApplicationContext`를 로드하며 실제 서블릿 환경을 구성합니다. 생성된 서블릿 컨테이너는 임의이 PORT를 listen합니다.
+
+#### `TestRestTemplate`
+
+- `@SpringBootTest`와 `TestRestTemplate`을 사용한다면 편리하게 웹 통합 테스트 가능
+- `@SpringBootTest`에서 Web Environmnet 설정을 했다면 그에 맞게 빈이 생성된다.
+- `MockMvc`는 서블릿 컨테이너를 사용하지 않지만 `@SpringBootTest`와 `TestRestTemplate`은 서블릿 컨테이너 사용
+- `Mockmvc`는 서버 입장에서 구현한 API를 통해 비즈니스 로직확인, `TestRestTemplate`은 클라이언트 입장에서 API 테스트
+
 #### `@WebMvcTest`
 
 - `@Controller`, `@RestController`, `@ControllerAdvice`, `@JsonComponent`, `Filter`, `WebMvcConfigurer`, `HandlerMethodArgumentResolver` 만 로드된다
 - 실제 구동되는 애플리케이션과 똑같이 로드하는 `@SpringBootTest` 보다 가볍게 테스트 할 수 있다.
-- 
+- Controller Layer만 테스트하고 싶을 때 유용하다.
+- `MockMvc`를 자동으로 설정하여 빈으로 등록한다.
 
+#### `@Mock` vs `@MockBean`
 
+- `@Mock`은 `@InjectMocks`에 대해서만 클래스 안에서 정의된 객체를 찾아 의존성 해결
+- `@MockBean`은 mock 객체를 컨텍스트에 등록, `@Autowired`를 통해 의존성 주입
 
 # mockk
 
@@ -187,10 +216,10 @@ class Person(
 ```kotlin
 companion object {
     fun account(): Account {
-        return Account(id = UUID.randomUUID(), 
-            name = "name", 
-            description = "description", 
-            currency = Currency.getInstance("USD"), 
+        return Account(id = UUID.randomUUID(),
+            name = "name",
+            description = "description",
+            currency = Currency.getInstance("USD"),
             amount = 2.0, addedOn = LocalDate.now())
     }
 }
@@ -223,13 +252,11 @@ class AccountFixture {
 - `account` 필요 시, `AccountFixture.account()`
 - 다른 `name`이 필요하다면 `AccountFixture.account(name="diff")` 사용
 
-
-
-
 <br>
 
 ## 참고
 
 - https://www.youtube.com/watch?v=Ou_-DFaAUhQ&t=517s
 - https://github.com/cheese10yun/spring-kotlin-api/blob/master/docs/spring-with-kotlin.md
-  
+- https://meetup.nhncloud.com/posts/124
+- https://cobbybb.tistory.com/16
