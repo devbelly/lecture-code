@@ -1,15 +1,17 @@
 package suspending_function
 
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 fun main(args: Array<String>) = runBlocking {
     (1..2).forEach { num ->
-        launch {
+        launch {          withContext(Dispatchers.Default){
+
             longRunningTask(num, num + 1)
             anotherJob()
-        }
+        }}
+
+
+
     }
 }
 
