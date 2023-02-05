@@ -3,33 +3,17 @@ package suspending_function
 import kotlinx.coroutines.*
 
 fun main(args: Array<String>) = runBlocking {
-    (1..2).forEach { num ->
-        launch {          withContext(Dispatchers.Default){
 
-            longRunningTask(num, num + 1)
-            anotherJob()
-        }}
-
-
-
+    launch{
+        log("메인 쓰레드에서 코루틴 실행중...")
+        withContext(Dispatchers.IO){
+            log("같은 코루틴이지만 다른 쓰레드에서 실행...")
+        }
+        log("메인 쓰레드는 블로킹으로부터 안전..")
     }
+    println("")
 }
 
-suspend fun longRunningTask(input1: Int, input2: Int): Int {
-    log("Start calculation. : input1 : $input1, input2 : $input2")
-    delay(2000)
-    val intermediateResult = input1 + input2
-    log("Intermediate result has been calculated (input1 + input2). : $intermediateResult")
-    delay(2000)
-    val finalResult = intermediateResult * 2
-    log("All of the calculation process have done (result * 2). : $finalResult")
-    return finalResult
-}
-
-suspend fun anotherJob(){
-    log("another Job Start!")
-    delay(2000)
-}
 private fun log(message: String) {
     println("[${Thread.currentThread().name}] : $message")
 }
