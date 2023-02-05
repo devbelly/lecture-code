@@ -1,3 +1,5 @@
+> 출처 [새차원, 코루틴 코틀린](https://www.youtube.com/watch?v=Vs34wiuJMYk&list=PLbJr8hAHHCP5N6Lsot8SAnC28SoxwAU5A)을 보고 정리한 글 & 코드입니다.
+
 ## 01. Why Coroutines
 
 - JVM은 메인 쓰레드를 비롯한 여러 쓰레드로 구성될 수 있다.
@@ -409,6 +411,7 @@ private fun log(message: String) {
 ```
 
 실행결과
+
 <img width="629" alt="image" src="https://user-images.githubusercontent.com/67682840/216823791-0bc4f2ce-d9d8-4a49-a150-383e5b50c0dc.png">
 
 
