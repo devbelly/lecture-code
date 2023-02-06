@@ -22,9 +22,9 @@
   
   <img width="845" alt="image" src="https://user-images.githubusercontent.com/67682840/215239137-cba71d88-b1f2-4331-b7d7-2d2bbfe683a4.png">
 
-  작업의 단위가 쓰레드 일 경우, 하나의 쓰레드가 다른 쓰레드의 결과에 의존적이라면 쓰레드가 블로킹되고 컨텍스트 스위칭이 발생한다.
+  업의 단위가 쓰레드 일 경우, 하나의 쓰레드가 다른 쓰레드의 결과에 의존적이라면 쓰레드가 블로킹되고 컨텍스트 스위칭이 발생한다.
   
-  <br>
+   <br> 
 
   <img width="841" alt="image" src="https://user-images.githubusercontent.com/67682840/215239216-ff08ebef-8e28-4c65-b30d-5f9ff4838c87.png">
   
