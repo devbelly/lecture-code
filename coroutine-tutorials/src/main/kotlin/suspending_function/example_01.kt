@@ -17,7 +17,7 @@ fun main()= runBlocking<Unit> {
 
 suspend fun doSomethingOne():Int{
     log("one start...")
-    delay(1000L)
+    delay(20000L)
     log("one end...")
     return 13
 }
