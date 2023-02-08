@@ -117,3 +117,5 @@ List<Tuple> result = queryFactory
         return usernameParam!=null?member.username.eq(usernameParam):null;
     }
   ```
+
+jdsl 공부중
